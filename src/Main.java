@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 // Абстрактный класс операции
-abstract class Operation {
-    protected double a;
-    protected double b;
+abstract class Operation<T extends Number> {
+    protected T a;
+    protected T b;
 
-    public Operation(double a, double b) {
+    public Operation(T a, T b) {
         this.a = a;
         this.b = b;
     }
@@ -15,95 +15,95 @@ abstract class Operation {
 }
 
 // Класс для сложения
-class Addition extends Operation {
-    public Addition(double a, double b) {
+class Addition<T extends Number> extends Operation<T> {
+    public Addition(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        return a + b;
+        return a.doubleValue() + b.doubleValue();
     }
 }
 
 // Класс для вычитания
-class Subtraction extends Operation {
-    public Subtraction(double a, double b) {
+class Subtraction<T extends Number> extends Operation<T> {
+    public Subtraction(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        return a - b;
+        return a.doubleValue() - b.doubleValue();
     }
 }
 
 // Класс для умножения
-class Multiplication extends Operation {
-    public Multiplication(double a, double b) {
+class Multiplication<T extends Number> extends Operation<T> {
+    public Multiplication(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        return a * b;
+        return a.doubleValue() * b.doubleValue();
     }
 }
 
 // Класс для деления
-class Division extends Operation {
-    public Division(double a, double b) {
+class Division<T extends Number> extends Operation<T> {
+    public Division(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        if (b == 0) {
+        if (b.doubleValue() == 0) {
             throw new ArithmeticException("Ошибка: обнаружено деление на ноль");
         }
-        return a / b;
+        return a.doubleValue() / b.doubleValue();
     }
 }
 
 // Класс для целочисленного деления
-class intDivision extends Operation {
-    public intDivision(int a, int b) {
+class intDivision<T extends Number> extends Operation<T> {
+    public intDivision(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        if (b == 0) {
+        if (b.intValue() == 0) {
             throw new ArithmeticException("Ошибка: обнаружено деление на ноль");
         }
-        return (int) (a / b);
+        return (int) (a.intValue() / b.intValue());
     }
 }
 
 // Класс для возведения в степень
-class Exponentiation extends Operation {
-    public Exponentiation(double a, double b) {
+class Exponentiation<T extends Number> extends Operation<T> {
+    public Exponentiation(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        return Math.pow(a, b);
+        return Math.pow(a.doubleValue(), b.doubleValue());
     }
 }
 
 // Класс для вычисления остатка от деления
-class Reminder extends Operation {
-    public Reminder(double a, double b) {
+class Reminder<T extends Number> extends Operation<T> {
+    public Reminder(T a, T b) {
         super(a, b);
     }
 
     @Override
     public double calculate() {
-        if (b == 0) {
+        if (b.doubleValue() == 0) {
             throw new ArithmeticException("Ошибка: обнаружено деление на ноль");
         }
-        return a % b;
+        return a.doubleValue() % b.doubleValue();
     }
 }
 
@@ -143,10 +143,10 @@ class ExprValidator {
 
 // Класс калькулятора
 class Calculator {
-    private Operation operation;
+    private Operation<? extends Number> operation;
 
     //Сеттер для класса
-    public void setOperation(Operation operation) {
+    public void setOperation(Operation<? extends Number> operation) {
         this.operation = operation;
     }
 
